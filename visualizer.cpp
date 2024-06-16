@@ -1,8 +1,3 @@
-//
-//  Created by Sharan on 27/02/20.
-//  Copyright © 2020 Sharan. All rights reserved.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -105,26 +100,16 @@ void int_str(int rad, char r[])
 void display_text()
 {
     glColor3d(cc[36], cc[37], cc[38]);
-    bitmap_output(250, 750, "SORTING ALGORITHM VISUALIZER", GLUT_BITMAP_TIMES_ROMAN_24);
-    // glBegin(GL_LINE_LOOP);
-    // glVertex2f(145, 700);
-    // glVertex2f(520, 700);
-    // glEnd();
+    bitmap_output(250, 750, "SORTVIZ", GLUT_BITMAP_TIMES_ROMAN_24);
     char text[20]; // other text small font
     glColor3d(cc[39], cc[40], cc[41]);
-    bitmap_output(15, 700, "This program sorts a random set of integers in ascending order by displaying them graphically", GLUT_BITMAP_HELVETICA_18);
-    bitmap_output(15, 680, "as bars with varying height", GLUT_BITMAP_HELVETICA_18);
-
-    // glColor3f(0.5, 0.5, 0.5);
+    bitmap_output(15, 700, "This program sorts a random set of integers in ascending order.", GLUT_BITMAP_HELVETICA_18);
+    bitmap_output(15, 680, ". . .....", GLUT_BITMAP_HELVETICA_18);
     glColor3d(cc[42], cc[43], cc[44]);
     int_str(speed, text);
     strcat(text, "ms");
-    // bitmap_output(620, 510, "Speed:", GLUT_BITMAP_HELVETICA_18);
-    // strcat(mode, "Mode");
     bitmap_output(600, 510, whichmode(fastslow), GLUT_BITMAP_HELVETICA_18);
-    // bitmap_output(650, 510, text, GLUT_BITMAP_HELVETICA_18);
     char iff[50] = "swapping ";
-    // strcat(texts, " swapping ");
     strcat(iff, text1);
     strcat(iff, " and ");
     strcat(iff, text2);
@@ -147,9 +132,8 @@ void display_text()
     glVertex2f(450.0, 500.0);
     glEnd();
     glColor3d(cc[56], cc[77], cc[36]);
-    bitmap_output(550.0, 700.0, "STEP", GLUT_BITMAP_TIMES_ROMAN_24);
+    bitmap_output(550.0, 700.0, "STEPS", GLUT_BITMAP_TIMES_ROMAN_24);
     glColor3d(cc[34], cc[58], cc[28]);
-    // bitmap_output(470, 650, texts, GLUT_BITMAP_HELVETICA_18);
     bitmap_output(470, 600, iff, GLUT_BITMAP_HELVETICA_18);
 
     glColor3d(cc[54], cc[55], cc[56]);
@@ -184,7 +168,6 @@ void Initialize()
         for (temp1 = 0; temp1 < MAX; temp1++)
         {
             a[temp1] = rand() % 100 + 1;
-            // printf("%d ", a[temp1]);
         }
         arrayFlag = 0;
     }
@@ -226,15 +209,15 @@ int notsorted()
 void display()
 {
     int ix, temp;
+    glClearColor(0.9, 0.9, 0.9, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    
+
         display_text();
         char text[10];
 
         for (ix = 0; ix < MAX; ix++)
         {
-            // glColor4d(1, 0, 0, 0);
             glBegin(GL_LINE_LOOP);
             glColor3d(cc[63], cc[64], cc[65]);
             glVertex2f(10 + (700 / (MAX + 1)) * ix, 50);
@@ -247,7 +230,6 @@ void display()
             glEnd();
 
             int_str(a[ix], text);
-            // printf("\n%s", text);
             glColor3d(cc[75], cc[76], cc[77]);
             bitmap_output(12 + (700 / (MAX + 1)) * ix, 30, text, GLUT_BITMAP_HELVETICA_18);
         }
@@ -298,7 +280,8 @@ void makedelay(int)
     {
         sorting = 0;
     }
-    speed = 1;
+    //increase the value to slow the speed of the pointer
+    speed = 500;
     glutPostRedisplay();
     glutTimerFunc(speed, makedelay, 100);
 }
@@ -306,12 +289,6 @@ void makedelay(int)
 // Keyboard Function
 void keyboard(unsigned char key, int x, int y)
 {
-    // if (key == 13)
-    // {
-    //     k = 1;
-    //     Initialize();
-    // }
-    // else
      if (key == 'k')
     {
         speed = 50;
@@ -424,19 +401,16 @@ void selectionsort()
                     }
                 }
             }
-            printf("\ni=%d min=%d at %d", i, min, pos);
-            printf("\nchecking %d and %d", min, a[i]);
+            printf("\n i=%d min=%d at %d", i, min, pos);
+            printf("\n checking %d and %d", min, a[i]);
             if (min < a[i])
             {
-
-                //j=pos;
                 int_str(min, text1);
                 int_str(a[i], text2);
-                printf("\nswapping %d and %d", min, a[i]);
+                printf("\n swapping %d and %d", min, a[i]);
                 temp = a[pos];
                 a[pos] = a[i];
                 a[i] = temp;
-                // vertical_index = min;
                 swapflag = 1; //change
                 goto A;
             }
@@ -544,32 +518,6 @@ A:
 
 //=========------------==================------------
 
-// void selectionsort()
-// {
-//     int i, j, min_idx;
-//     while (notsorted())
-//     {
-//         // One by one move boundary of unsorted subarray
-//         for (i = 0; i < MAX - 1; i++)
-//         {
-//             // Find the minimum element in unsorted array
-//             min_idx = i;
-//             for (j = i + 1; j < MAX; j++)
-//                 if (a[j] < a[min_idx])
-//                     min_idx = j;
-
-//             // Swap the found minimum element with the first element
-//             swap(&a[min_idx], &a[i]);
-//             swapflag = 1;
-//             vertical_index = min_idx;
-//             goto A;
-//         }
-//     }
-//     sorting = 0;
-// A:
-//     printf("");
-// }
-
 // To find gap between elements
 int getNextGap(int gap)
 {
@@ -643,7 +591,7 @@ int main(int argc, char **argv)
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(2000, 1000);
     glutInitWindowPosition(0, 0);
-    glutCreateWindow("SORTING ALGORITHM VISUALIZER");
+    glutCreateWindow("SORTVIZ");
     Initialize();
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboard);
